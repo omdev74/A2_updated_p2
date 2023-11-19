@@ -1,0 +1,34 @@
+﻿@{
+    var categories = ViewBag.Categories as List<Category>;
+    var faqs = ViewBag.FAQs as List<FAQ>;
+    var topics = ViewBag.Topics as List<Topic>;
+}
+
+<div class="container">
+    <div class="row">
+        <!-- Vertical Bootstrap List Group for Categories -->
+        <div class="col-md-3">
+            @Html.Partial("_CategoryList", categories)
+        </div>
+
+        <!-- FAQs Section -->
+        <div class="col-md-9">
+            <!-- Navbar -->
+            @Html.Partial("_NavBarPartial", topics)
+
+            <!-- FAQs rendering logic -->
+            <ul class="list-group faqSection">
+                <h4>All FAQs</h4>
+                @foreach (var faq in faqs)
+                {
+                    <li class="list-group-item faqs">
+                        <h5>@faq.Question</h5>
+                        <p>@faq.Answer</p>
+                        <a href="@Url.RouteUrl("category", new { categoryId = faq.Topic.Category.CategoryId })">Category: @faq.Topic.Category.Name</a>
+                        <a href="@Url.RouteUrl("topic", new { topicId = faq.Topic.TopicId })">Topic: @faq.Topic.Name</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
